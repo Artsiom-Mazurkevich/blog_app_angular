@@ -1,0 +1,15 @@
+.base_page_layout {
+ @apply max-w-screen-desktop px-3 flex flex-row justify-between
+}
+
+.nav_container {
+ @apply w-1/4 p-2 bg-white rounded
+}
+
+.posts_container {
+ @apply w-full ml-10 p-2
+}
+
+.nav__link {
+  @apply inline-block w-full rounded mb-2.5 p-2 hover:cursor-pointer hover:bg-purple-100 transition ease-in-out
+}
