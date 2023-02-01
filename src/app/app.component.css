@@ -1,5 +1,5 @@
 .layout {
   /*max-width: 1140px;*/
   /*margin: 0 auto;*/
-  @apply max-w-screen-desktop mt-20 mx-auto
+  @apply max-w-screen-xl mt-20 mx-auto
 }

@@ -1,1 +1,7 @@
-<p>post works!</p>
+<a href="#" class="post__link">
+   <div>
+      <p>{{ post.title }}</p>
+      <p>{{ post.text }}</p>
+   </div>
+   <img class="post__img" *ngIf="post.imageUrl" [src]="post.imageUrl" alt="" />
+</a>

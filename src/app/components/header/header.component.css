@@ -3,7 +3,7 @@
 }
 
 .header__content {
-  @apply max-w-screen-desktop px-3 mx-auto flex flex-row justify-between
+  @apply max-w-screen-xl px-3 mx-auto flex flex-row justify-between
 }
 
 .header__input-search {

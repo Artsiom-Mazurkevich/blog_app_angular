@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { Post, PostService } from '../../services/post.service'
 
 @Component({
    selector: 'app-base-page',
@@ -6,7 +7,13 @@ import { Component, OnInit } from '@angular/core'
    styleUrls: ['./base-page.component.css'],
 })
 export class BasePageComponent implements OnInit {
-   constructor() {}
+   constructor(private postService: PostService) {}
 
-   ngOnInit(): void {}
+   posts: Post[] = []
+
+   ngOnInit(): void {
+      this.postService.getPosts().subscribe(posts => {
+         this.posts = posts
+      })
+   }
 }
