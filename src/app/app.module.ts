@@ -9,6 +9,8 @@ import { HttpClientModule } from '@angular/common/http'
 import { LoginPageComponent } from './pages/login-page/login-page.component'
 import { CreateAccountPageComponent } from './pages/create-account-page/create-account-page.component'
 import { FormsModule } from '@angular/forms'
+import { CreatePostPageComponent } from './pages/create-post-page/create-post-page.component'
+import { NgxEditorModule } from 'ngx-editor'
 
 @NgModule({
    declarations: [
@@ -18,8 +20,9 @@ import { FormsModule } from '@angular/forms'
       BasePageComponent,
       LoginPageComponent,
       CreateAccountPageComponent,
+      CreatePostPageComponent,
    ],
-   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
+   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, NgxEditorModule],
    providers: [],
    bootstrap: [AppComponent],
 })

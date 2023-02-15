@@ -3,12 +3,13 @@
       <div>
          <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Sign up to your account</h2>
       </div>
-      <form class="mt-8 space-y-6" action="#" method="POST">
+      <form class="mt-8 space-y-6" (ngSubmit)="signIn()" method="POST">
          <input type="hidden" name="remember" value="true" />
          <div class="-space-y-px rounded-md shadow-sm">
             <div>
                <label for="email-address" class="sr-only">Username</label>
                <input
+                  [(ngModel)]="newUser.username"
                   id="username"
                   name="user"
                   type="text"
@@ -20,6 +21,7 @@
             <div>
                <label for="email-address" class="sr-only">Email address</label>
                <input
+                  [(ngModel)]="newUser.email"
                   id="email-address"
                   name="email"
                   type="email"
@@ -32,6 +34,7 @@
             <div>
                <label for="password" class="sr-only">Password</label>
                <input
+                  [(ngModel)]="newUser.password"
                   id="password"
                   name="password"
                   type="password"

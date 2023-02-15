@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { AuthService } from '../../services/auth.service'
 
-interface LoginDTO {
+interface SignInDTO {
    email: string
    password: string
 }
@@ -14,7 +14,7 @@ interface LoginDTO {
 export class LoginPageComponent implements OnInit {
    constructor(private authService: AuthService) {}
 
-   userData: LoginDTO = {
+   userData: SignInDTO = {
       email: '',
       password: '',
    }

@@ -4,59 +4,79 @@ import { Router } from '@angular/router'
 import { catchError, Observable } from 'rxjs'
 import { CookieService } from 'ngx-cookie-service'
 
+export interface IUser {
+   _id: string
+   email: string
+   username: string
+   avatar?: string
+}
+
 @Injectable({
    providedIn: 'root',
 })
 export class AuthService {
-   endpoint: string = 'http://localhost:3000/api/'
-   // headers = new HttpHeaders().set('Content-Type', 'application/json')
-   // currentUser = {}
-   constructor(private http: HttpClient, public router: Router, private cookieService: CookieService) {}
-   signUp(user: { username: string; email: string; password: string }) {
-      let api = `${this.endpoint}/auth/signup`
-      return this.http.post(api, user).pipe(catchError(async err => console.log(err)))
+   private endpoint: string = 'http://localhost:3000/api/'
+
+   private authToken = ''
+   private user: IUser = {
+      _id: '',
+      email: '',
+      username: '',
+      avatar: '',
    }
-   signIn(user: { email: string; password: string }) {
+
+   constructor(private http: HttpClient, public router: Router, private cookieService: CookieService) {}
+
+   signUp(user: { username: string; email: string; password: string }) {
+      let api = `${this.endpoint}auth/signup`
       return this.http
-         .post<any>(`${this.endpoint}auth/signin`, user)
-         .pipe(catchError(async err => console.warn('Error: ', err)))
+         .post<IUser>(api, user)
+         .pipe(catchError(async err => console.log(err)))
          .subscribe(res => {
-            this.router.navigate([''])
+            if (res) {
+               this.user = res
+               this.router.navigate(['signin'])
+            }
          })
    }
-   // getToken() {
-   //    return localStorage.getItem('access_token')
-   // }
-   // get isLoggedIn(): boolean {
-   //    let authToken = localStorage.getItem('access_token')
-   //    return authToken !== null ? true : false
-   // }
-   // doLogout() {
-   //    let removeToken = localStorage.removeItem('access_token')
-   //    if (removeToken == null) {
-   //       this.router.navigate(['log-in'])
-   //    }
-   // }
-   // // User profile
-   // getUserProfile(id: any): Observable<any> {
-   //    let api = `${this.endpoint}/user-profile/${id}`
-   //    return this.http.get(api, { headers: this.headers }).pipe(
-   //       map(res => {
-   //          return res || {}
-   //       }),
-   //       catchError(this.handleError)
-   //    )
-   // }
-   // // Error
-   // handleError(error: HttpErrorResponse) {
-   //    let msg = ''
-   //    if (error.error instanceof ErrorEvent) {
-   //       // client-side error
-   //       msg = error.error.message
-   //    } else {
-   //       // server-side error
-   //       msg = `Error Code: ${error.status}\nMessage: ${error.message}`
-   //    }
-   //    return throwError(msg)
-   // }
+
+   signIn(user: { email: string; password: string }) {
+      return this.http
+         .post<{ access_token: string }>(`${this.endpoint}auth/signin`, user)
+         .pipe(catchError(async err => console.warn('Error: ', err)))
+         .subscribe(res => {
+            if (res) {
+               localStorage.setItem('access_token', res.access_token)
+               this.authToken = `Bearer ${res.access_token}`
+               this.router.navigate([''])
+            }
+         })
+   }
+
+   me() {
+      return this.http
+         .get<IUser>(`${this.endpoint}auth/me`, { headers: { Authorization: this.authToken } })
+         .subscribe(res => (this.user = res))
+   }
+
+   doLogout() {
+      if (localStorage.getItem('access_token')) {
+         localStorage.removeItem('access_token')
+         this.authToken = ''
+         this.router.navigate([''])
+      }
+   }
+
+   // @ts-ignore
+   get isLoggedIn(): boolean {
+      return !!this.authToken
+   }
+
+   set isLoggedIn(token: string) {
+      this.authToken = token
+   }
+
+   get userInfo(): IUser {
+      return this.user
+   }
 }

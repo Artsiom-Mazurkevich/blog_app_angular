@@ -1,9 +1,13 @@
 <header class="header">
    <div class="header__content">
       <input class="header__input-search" type="search" placeholder="search post" />
-      <div>
+      <div *ngIf="!isAuth">
          <a href="/signin" class="header__link-login">Sign in</a>
          <a href="/signup" class="header__link-create-account">Create Account</a>
+      </div>
+      <div *ngIf="isAuth">
+         <a class="header__link-login" href="/new_post">Create Post</a>
+         <button (click)="logout()" class="header__link-create-account">Logout</button>
       </div>
    </div>
 </header>
