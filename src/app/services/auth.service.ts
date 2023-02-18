@@ -56,7 +56,12 @@ export class AuthService {
    me() {
       return this.http
          .get<IUser>(`${this.endpoint}auth/me`, { headers: { Authorization: this.authToken } })
-         .subscribe(res => (this.user = res))
+         .pipe(catchError(async err => console.log(err)))
+         .subscribe(res => {
+            if (res) {
+               this.user = res
+            }
+         })
    }
 
    doLogout() {
