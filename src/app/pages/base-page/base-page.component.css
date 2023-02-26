@@ -3,11 +3,11 @@
 }
 
 .nav_container {
-   @apply w-1/4 p-2 bg-white rounded;
+   @apply w-1/4 p-2 bg-white rounded h-fit max-sm:hidden mt-2 mr-3;
 }
 
 .posts_container {
-   @apply w-full ml-3 sm:ml-5 p-2;
+   @apply w-full p-2;
 }
 
 .nav__link {

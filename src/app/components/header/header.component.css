@@ -22,7 +22,7 @@
 }
 
 .header__link-login {
-   @apply mr-2 text-blue-600 dark:text-blue-500 hover:cursor-pointer px-5 py-2.5 rounded-lg hover:bg-blue-100;
+   @apply mr-2 underline text-blue-600 dark:text-blue-500 hover:cursor-pointer px-5 py-2.5 rounded-lg hover:bg-blue-100;
 }
 
 .header__link-create-account {
@@ -38,7 +38,6 @@
   px-5
   py-2.5
   mr-2
-  mb-2
   dark:bg-blue-600
   dark:hover:bg-blue-700
   focus:outline-none

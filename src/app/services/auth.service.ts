@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core'
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Router } from '@angular/router'
 import { catchError, Observable } from 'rxjs'
-import { CookieService } from 'ngx-cookie-service'
 
 export interface IUser {
    _id: string
@@ -25,7 +24,7 @@ export class AuthService {
       avatar: '',
    }
 
-   constructor(private http: HttpClient, public router: Router, private cookieService: CookieService) {}
+   constructor(private http: HttpClient, public router: Router) {}
 
    signUp(user: { username: string; email: string; password: string }) {
       let api = `${this.endpoint}auth/signup`
@@ -46,7 +45,7 @@ export class AuthService {
          .pipe(catchError(async err => console.warn('Error: ', err)))
          .subscribe(res => {
             if (res) {
-               localStorage.setItem('access_token', res.access_token)
+               localStorage.setItem('rhbz', res.access_token)
                this.authToken = `Bearer ${res.access_token}`
                this.router.navigate([''])
             }
@@ -54,31 +53,40 @@ export class AuthService {
    }
 
    me() {
-      return this.http
-         .get<IUser>(`${this.endpoint}auth/me`, { headers: { Authorization: this.authToken } })
-         .pipe(catchError(async err => console.log(err)))
-         .subscribe(res => {
-            if (res) {
-               this.user = res
-            }
-         })
+      const access_token = localStorage.getItem('rhbz')
+      if (access_token) {
+         this.http
+            .get<IUser>(`${this.endpoint}auth/me`, { headers: { Authorization: `Bearer ${access_token}` } })
+            .pipe(
+               catchError(async err => {
+                  if (err) {
+                     localStorage.removeItem('rhbz')
+                     await this.router.navigate(['signin'])
+                  }
+               })
+            )
+            .subscribe(res => {
+               if (res) {
+                  this.user = res
+                  this.authToken = access_token
+               }
+            })
+      }
    }
 
    doLogout() {
-      if (localStorage.getItem('access_token')) {
-         localStorage.removeItem('access_token')
+      if (localStorage.getItem('rhbz')) {
+         localStorage.removeItem('rhbz')
          this.authToken = ''
          this.router.navigate([''])
       }
+      this.authToken = ''
+      this.router.navigate([''])
    }
 
    // @ts-ignore
    get isLoggedIn(): boolean {
       return !!this.authToken
-   }
-
-   set isLoggedIn(token: string) {
-      this.authToken = token
    }
 
    get userInfo(): IUser {

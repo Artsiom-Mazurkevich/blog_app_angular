@@ -9,6 +9,12 @@ import { AuthService, IUser } from '../../services/auth.service'
 export class HeaderComponent implements DoCheck {
    constructor(private authService: AuthService) {}
 
+   isOpenMenu = false
+
+   toggleMenu() {
+      this.isOpenMenu = !this.isOpenMenu
+   }
+
    isAuth = false
    user: IUser = {
       _id: '',

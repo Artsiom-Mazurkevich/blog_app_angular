@@ -20,7 +20,6 @@ export class LoginPageComponent implements OnInit {
    }
 
    login() {
-      console.log(this.userData)
       this.authService.signIn(this.userData)
    }
 

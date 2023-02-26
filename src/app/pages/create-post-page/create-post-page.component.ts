@@ -2,6 +2,7 @@ import { Component, DoCheck, OnInit } from '@angular/core'
 import { AuthService } from '../../services/auth.service'
 import { PostService } from '../../services/post.service'
 import { FormBuilder, FormGroup } from '@angular/forms'
+import { Router } from '@angular/router'
 
 @Component({
    selector: 'app-create-post-page',
@@ -9,7 +10,12 @@ import { FormBuilder, FormGroup } from '@angular/forms'
    styleUrls: ['./create-post-page.component.css'],
 })
 export class CreatePostPageComponent implements OnInit {
-   constructor(private authService: AuthService, private postService: PostService, private formBuilder: FormBuilder) {}
+   constructor(
+      private authService: AuthService,
+      private postService: PostService,
+      private formBuilder: FormBuilder,
+      private router: Router
+   ) {}
 
    uploadForm: FormGroup
 
@@ -46,6 +52,6 @@ export class CreatePostPageComponent implements OnInit {
       // @ts-ignore
       formData.append('text', this.uploadForm.get('text').value)
 
-      this.postService.createPost(formData).subscribe(res => console.log(res))
+      this.postService.createPost(formData).subscribe(res => this.router.navigate(['']))
    }
 }
