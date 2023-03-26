@@ -1,24 +1,21 @@
 import { Component, DoCheck, OnInit } from '@angular/core'
-import { HttpClient } from '@angular/common/http'
+import { UserService } from '../../services/user.service'
+import { AuthService } from '../../services/auth.service'
 
 @Component({
    selector: 'app-settings-page',
    templateUrl: './settings-page.component.html',
    styleUrls: ['./settings-page.component.css'],
 })
-export class SettingsPageComponent implements OnInit, DoCheck {
-   constructor(private http: HttpClient) {}
+export class SettingsPageComponent {
+   constructor(private userService: UserService, authService: AuthService) {}
 
-   fileToUpload: File | null = null
    handleFileInput(event: Event) {
       let targ = event.target as HTMLInputElement
       if (targ.files) {
-         this.fileToUpload = targ.files['0']
+         let formData = new FormData()
+         formData.append('image', targ.files['0'])
+         this.userService.updateProfileImage(formData).subscribe(res => console.log(res))
       }
-   }
-
-   ngOnInit(): void {}
-   ngDoCheck() {
-      console.log(this.fileToUpload)
    }
 }
