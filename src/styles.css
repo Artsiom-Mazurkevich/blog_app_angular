@@ -2,22 +2,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/*For markdown editor*/
-
-button:has(.fa-search) {
-   background-color: #0d6efd;
-}
-
-#editor1 {
-   @apply p-2 rounded-b-lg;
-}
-
-.md-editor {
-   @apply rounded-lg;
-}
-.md-header {
-   @apply rounded-t-lg;
-}
-
-/*For markdown editor*/

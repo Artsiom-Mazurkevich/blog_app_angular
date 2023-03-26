@@ -9,8 +9,9 @@ import { HttpClientModule } from '@angular/common/http'
 import { LoginPageComponent } from './pages/login-page/login-page.component'
 import { CreateAccountPageComponent } from './pages/create-account-page/create-account-page.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { CreatePostPageComponent } from './pages/create-post-page/create-post-page.component';
+import { CreatePostPageComponent } from './pages/create-post-page/create-post-page.component'
 import { SinglePostPageComponent } from './pages/single-post-page/single-post-page.component'
+import { SettingsPageComponent } from './pages/settings-page/settings-page.component'
 
 @NgModule({
    declarations: [
@@ -22,6 +23,7 @@ import { SinglePostPageComponent } from './pages/single-post-page/single-post-pa
       CreateAccountPageComponent,
       CreatePostPageComponent,
       SinglePostPageComponent,
+      SettingsPageComponent,
    ],
    imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, ReactiveFormsModule],
    providers: [],

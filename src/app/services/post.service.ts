@@ -7,7 +7,7 @@ export interface Post {
    _id: string
    title: string
    text: string
-   authorId: string
+   authorId: { _id: string; avatar: string }
    authorName: string
    viewsCount: number
    imageUrl: null | string
