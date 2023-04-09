@@ -1,32 +1,36 @@
 <div class="settings_container">
    <div class="userinfo_container">
-      <h1 class="font-bold font-size text-2xl mb-3">User</h1>
-      <div class="mb-5">
-         <label for="username-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >Username</label
-         >
-         <input type="text" id="username-input" class="username_input" />
-      </div>
-      <div class="mb-10 border rounded-lg p-2 border-gray-300">
-         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input"
-            >Upload Image</label
-         >
-         <div class="flex flex-row items-center">
-            <span
-               class="select-none flex justify-center bg-gray-500 w-12 h-11 rounded-full items-center text-white font-semibold mr-3"
-               >AR</span
-            >
-            <input
-               id="file_input"
-               (change)="handleFileInput($event)"
-               type="file"
-               class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"
-            />
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+         <h1 class="font-bold font-size text-2xl mb-3">User</h1>
+         <div class="mb-5">
+            <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
+            <input formControlName="username" type="text" id="username" class="username_input" [value]="username" />
          </div>
-         <p class="mt-1 ml-14 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">
-            PNG or JPG (MAX. 200x200px).
-         </p>
-      </div>
-      <button class="bg-purple-600 rounded py-2 text-white font-semibold">Save Profile Information</button>
+         <div class="mb-10 border rounded-lg p-2 border-gray-300">
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input"
+               >Upload Image</label
+            >
+            <div class="flex flex-row items-center">
+               <span
+                  *ngIf="!this.avatarUrl"
+                  class="select-none flex justify-center bg-gray-500 w-11 h-11 rounded-full items-center text-white font-semibold mr-3"
+                  >{{ username }}</span
+               >
+               <img *ngIf="this.avatarUrl" class="w-11 h-11 rounded-full mr-3" [src]="avatarUrl" alt="" />
+               <input
+                  id="file_input"
+                  (change)="handleFileInput($event)"
+                  type="file"
+                  class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:cursor-pointer hover:file:bg-blue-600"
+               />
+            </div>
+            <p class="mt-1 ml-14 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">
+               PNG or JPG (MAX. 200x200px).
+            </p>
+         </div>
+         <button class="bg-purple-600 rounded-md py-2 px-2 text-white font-semibold w-full" type="submit">
+            Save Profile Information
+         </button>
+      </form>
    </div>
 </div>

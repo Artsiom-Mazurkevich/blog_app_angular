@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core'
+import { DoCheck, Injectable } from '@angular/core'
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Router } from '@angular/router'
-import { catchError, Observable } from 'rxjs'
+import { BehaviorSubject, catchError, map, Observable, Subject } from 'rxjs'
 
 export interface IUser {
    _id: string
@@ -16,13 +16,13 @@ export interface IUser {
 export class AuthService {
    private endpoint: string = 'http://localhost:3000/api/'
 
-   private authToken = ''
-   private user: IUser = {
+   private authToken: BehaviorSubject<string> = new BehaviorSubject<string>('')
+   private user: BehaviorSubject<IUser> = new BehaviorSubject<IUser>({
       _id: '',
-      email: '',
       username: '',
+      email: '',
       avatar: '',
-   }
+   })
 
    constructor(private http: HttpClient, public router: Router) {}
 
@@ -33,7 +33,7 @@ export class AuthService {
          .pipe(catchError(async err => console.log(err)))
          .subscribe(res => {
             if (res) {
-               this.user = res
+               this.user.next(res)
                this.router.navigate(['signin'])
             }
          })
@@ -46,7 +46,8 @@ export class AuthService {
          .subscribe(res => {
             if (res) {
                localStorage.setItem('rhbz', res.access_token)
-               this.authToken = `Bearer ${res.access_token}`
+               // this.authToken = `Bearer ${res.access_token}`
+               this.authToken.next(`Bearer ${res.access_token}`)
                this.router.navigate([''])
             }
          })
@@ -67,8 +68,9 @@ export class AuthService {
             )
             .subscribe(res => {
                if (res) {
-                  this.user = res
-                  this.authToken = access_token
+                  this.user.next(res)
+                  // this.authToken = access_token
+                  this.authToken.next(access_token)
                }
             })
       }
@@ -77,19 +79,29 @@ export class AuthService {
    doLogout() {
       if (localStorage.getItem('rhbz')) {
          localStorage.removeItem('rhbz')
-         this.authToken = ''
+         // this.authToken = ''
+         this.authToken.next('')
          this.router.navigate([''])
       }
-      this.authToken = ''
+      // this.authToken = ''
+      this.authToken.next('')
       this.router.navigate([''])
    }
 
    // @ts-ignore
-   get isLoggedIn(): boolean {
-      return !!this.authToken
+   // get isLoggedIn() {
+   //    return !!this.authToken
+   // }
+
+   get isLoggedIn(): Observable<boolean> {
+      return this.authToken.pipe(map(() => !!this.authToken))
    }
 
-   get userInfo(): IUser {
+   // get userInfo() {
+   //    return this.user
+   // }
+
+   get userInfo(): Observable<IUser> {
       return this.user
    }
 }

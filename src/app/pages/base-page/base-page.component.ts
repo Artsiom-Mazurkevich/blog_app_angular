@@ -14,6 +14,7 @@ export class BasePageComponent implements OnInit {
    ngOnInit(): void {
       this.postService.getPosts().subscribe(posts => {
          this.posts = posts
+         console.log(posts)
       })
    }
 }

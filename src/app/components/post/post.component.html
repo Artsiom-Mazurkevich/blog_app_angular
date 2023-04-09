@@ -2,7 +2,9 @@
    <img class="post__img" *ngIf="post.imageUrl" [src]="post.imageUrl" alt="" />
    <div class="post__body">
       <div class="flex">
-         <img class="w-11 h-11 mr-3 bg-amber-900" src="" alt="" />
+         <img *ngIf="post.authorId.avatar" class="w-11 h-11 mr-3 rounded-full" [src]="post.authorId.avatar" alt="" />
+         <!--⬇🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻⬇-->
+         <img *ngIf="!post.authorId.avatar" class="w-11 h-11 mr-3 bg-gray-600 rounded-full" src="" alt="" />
          <div>
             <p>{{ post.authorName }}</p>
             <p class="text-sm">{{ post.createdAt | date }}</p>
@@ -10,7 +12,7 @@
       </div>
       <div class="pl-14 pt-3">
          <p class="post__title">{{ post.title }}</p>
-         <p class="post__text">{{ post.text }}</p>
+         <p class="post__text">{{ post.text | slice : 0 : 300 }}...</p>
       </div>
    </div>
 </a>

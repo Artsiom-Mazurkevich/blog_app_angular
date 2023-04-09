@@ -12,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { CreatePostPageComponent } from './pages/create-post-page/create-post-page.component'
 import { SinglePostPageComponent } from './pages/single-post-page/single-post-page.component'
 import { SettingsPageComponent } from './pages/settings-page/settings-page.component'
+import { NgOptimizedImage } from '@angular/common'
 
 @NgModule({
    declarations: [
@@ -25,7 +26,7 @@ import { SettingsPageComponent } from './pages/settings-page/settings-page.compo
       SinglePostPageComponent,
       SettingsPageComponent,
    ],
-   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, ReactiveFormsModule],
+   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, ReactiveFormsModule, NgOptimizedImage],
    providers: [],
    bootstrap: [AppComponent],
 })
